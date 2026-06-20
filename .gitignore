@@ -24,7 +24,7 @@ secrets.json
 # Django Media and Static files
 media/
 staticfiles/
-/static/
+
 
 # Log files
 *.log
