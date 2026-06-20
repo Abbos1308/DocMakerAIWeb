@@ -32,7 +32,11 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = config('SECRET_KEY')
 
 
-ALLOWED_HOSTS = ["docmakeraiweb.onrender.com"]
+ALLOWED_HOSTS = [
+    'docmakerai.qzz.io',
+    'www.docmakerai.qzz.io',
+    'docmakeraiweb.onrender.com',  # keep this too
+]
 
 
 # Application definition
