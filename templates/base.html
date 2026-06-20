@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+{% load static %}
+<html class="dark" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;700&amp;family=Geist:wght@400;600;700;800&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link rel="icon" href="{% static 'icon.png' %}">
+<style>
+        body {
+            background-color: #0d0d0d;
+            margin: 0;
+            padding: 0;
+            color: #e3e2e2;
+        }
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        .neon-glow:hover {
+            text-shadow: 0 0 8px #00f2ff, 0 0 12px rgba(0, 242, 255, 0.4);
+            color: #00f2ff;
+        }
+        .nav-item-transition {
+            transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+    </style>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "surface-container-low": "#1a1c1c",
+                        "outline-variant": "#3a494b",
+                        "on-primary": "#00363a",
+                        "inverse-primary": "#00696f",
+                        "tertiary-fixed-dim": "#e8c423",
+                        "outline": "#849495",
+                        "tertiary": "#fff6e4",
+                        "on-tertiary-fixed": "#221b00",
+                        "on-primary-fixed": "#002022",
+                        "inverse-surface": "#e3e2e2",
+                        "secondary-fixed": "#e5e2e1",
+                        "background": "#0d0d0d",
+                        "on-secondary-container": "#b7b5b4",
+                        "surface-tint": "#00dbe7",
+                        "primary-fixed-dim": "#00dbe7",
+                        "on-surface": "#e3e2e2",
+                        "error-container": "#93000a",
+                        "on-error": "#690005",
+                        "surface-container-highest": "#343535",
+                        "on-secondary-fixed": "#1c1b1b",
+                        "tertiary-fixed": "#ffe173",
+                        "on-surface-variant": "#b9cacb",
+                        "surface-container": "#1e2020",
+                        "surface": "#121414",
+                        "surface-variant": "#343535",
+                        "secondary-container": "#474746",
+                        "on-tertiary-fixed-variant": "#554500",
+                        "primary": "#e1fdff",
+                        "on-secondary-fixed-variant": "#474746",
+                        "secondary-fixed-dim": "#c8c6c5",
+                        "secondary": "#c8c6c5",
+                        "error": "#ffb4ab",
+                        "tertiary-container": "#fed83a",
+                        "on-primary-container": "#006a71",
+                        "surface-dim": "#121414",
+                        "on-error-container": "#ffdad6",
+                        "surface-bright": "#383939",
+                        "primary-container": "#00f2ff",
+                        "on-tertiary": "#3b2f00",
+                        "on-background": "#e3e2e2",
+                        "surface-container-high": "#292a2a",
+                        "inverse-on-surface": "#2f3131",
+                        "surface-container-lowest": "#0d0e0f",
+                        "primary-fixed": "#74f5ff",
+                        "on-tertiary-container": "#725e00",
+                        "on-secondary": "#313030",
+                        "on-primary-fixed-variant": "#004f54"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "0.125rem",
+                        "lg": "0.25rem",
+                        "xl": "0.5rem",
+                        "full": "0.75rem"
+                    },
+                    "spacing": {
+                        "lg": "40px",
+                        "margin": "32px",
+                        "xs": "8px",
+                        "xl": "64px",
+                        "md": "24px",
+                        "sm": "16px",
+                        "gutter": "24px",
+                        "base": "4px"
+                    },
+                    "fontFamily": {
+                        "headline-lg": ["Geist"],
+                        "display": ["Geist"],
+                        "body-md": ["JetBrains Mono"],
+                        "label-caps": ["JetBrains Mono"],
+                        "body-lg": ["JetBrains Mono"],
+                        "headline-md": ["Geist"],
+                        "code-sm": ["JetBrains Mono"]
+                    },
+                    "fontSize": {
+                        "headline-lg": ["32px", {"lineHeight": "1.2", "letterSpacing": "-0.01em", "fontWeight": "600"}],
+                        "display": ["48px", {"lineHeight": "1.1", "letterSpacing": "-0.02em", "fontWeight": "700"}],
+                        "body-md": ["14px", {"lineHeight": "1.5", "fontWeight": "400"}],
+                        "label-caps": ["12px", {"lineHeight": "1", "letterSpacing": "0.05em", "fontWeight": "700"}],
+                        "body-lg": ["16px", {"lineHeight": "1.6", "fontWeight": "400"}],
+                        "headline-md": ["24px", {"lineHeight": "1.3", "fontWeight": "600"}],
+                        "code-sm": ["13px", {"lineHeight": "1.4", "fontWeight": "400"}]
+                    }
+                },
+            },
+        }
+    </script>
+</head>
+<body class="bg-background text-on-background selection:bg-primary-container selection:text-on-primary">
+<!-- TopAppBar Component (from Shared Components JSON structure) -->
+<header class="bg-background border-b border-outline-variant w-full fixed top-0 left-0 z-50 transition-all duration-300">
+<div class="max-w-7xl mx-auto px-margin py-xs flex justify-between items-center h-16">
+<!-- Left Side: Logo & Brand Name -->
+<div class="flex items-center gap-sm">
+<div class="w-8 h-8 flex items-center justify-center">
+
+</div>
+<span class="text-headline-md font-bold tracking-tight text-primary-container">
+    <img src="{% static 'yourapp/icon.png' %}"
+    style="display:inline-block; width:24px; height:24px;" />
+    <a href="{% url 'home' %}">
+                    DocMakerAI</a>
+                </span>
+</div>
+<!-- Right Side: Developer Social Icons -->
+<div class="flex items-center gap-md">
+<!-- GitHub Icon -->
+<a aria-label="GitHub Repository" class="nav-item-transition text-on-surface-variant hover:text-primary-container flex items-center justify-center p-xs active:scale-[0.98]" href="https://github.com/Abbos1308" rel="noopener noreferrer" target="_blank">
+<svg class="w-6 h-6 fill-current" viewbox="0 0 24 24">
+<path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z"></path>
+</svg>
+</a>
+<!-- Telegram Icon -->
+<a aria-label="Telegram Contact" class="nav-item-transition text-on-surface-variant hover:text-primary-container flex items-center justify-center p-xs active:scale-[0.98]" href="https://t.me/ravshanov_dev" rel="noopener noreferrer" target="_blank">
+<svg class="w-6 h-6 fill-current" viewbox="0 0 24 24">
+<path d="M20.665 3.717l-17.73 6.837c-1.21.486-1.203 1.161-.222 1.462l4.552 1.42 10.532-6.645c.498-.303.953-.14.579.192l-8.533 7.701-.332 4.965c.488 0 .704-.223.977-.485l2.344-2.279 4.875 3.597c.898.496 1.542.241 1.766-.83l3.195-15.059c.328-1.314-.501-1.909-1.357-1.565z"></path>
+</svg>
+</a>
+<!-- Email Icon -->
+<a aria-label="Email Support" class="nav-item-transition text-on-surface-variant hover:text-primary-container flex items-center justify-center p-xs active:scale-[0.98]" href="mailto:ravshanovdev2008@gmail.com">
+<span class="material-symbols-outlined text-[24px]">mail</span>
+</a>
+</div>
+</div>
+</header>
+<main>
+{% block content %}
+
+{% endblock %}
+</main>
+
+
+<script>
+        // Micro-interactions for header on scroll
+        const header = document.querySelector('header');
+        window.addEventListener('scroll', () => {
+            if (window.scrollY > 20) {
+                header.classList.add('bg-surface-container-lowest', 'shadow-xl');
+                header.classList.remove('bg-background');
+            } else {
+                header.classList.remove('bg-surface-container-lowest', 'shadow-xl');
+                header.classList.add('bg-background');
+            }
+        });
+
+        // Console easter egg for developers
+        console.log("%c DocMakerAI %c Developer Console Active ", 
+            "background: #00f2ff; color: #0d0d0d; font-weight: bold; padding: 4px 8px; border-radius: 2px;", 
+            "background: #1a1a1a; color: #00f2ff; padding: 4px 8px; border-radius: 2px;");
+    </script>
+</body></html>

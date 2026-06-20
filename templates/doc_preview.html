@@ -1,0 +1,235 @@
+{% extends 'base.html' %}
+<!DOCTYPE html>
+{% load static %}
+
+{% block content %}
+<html class="dark" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>DocMakerai - Vue Router Documentation</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link rel="stylesheet" href="{% static 'css/highlight.css' %}">
+<link rel="stylesheet" href="{% static 'css/style.css' %}">
+<link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;700&amp;family=Geist:wght@400;600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "outline": "#849495",
+                        "on-error": "#690005",
+                        "surface-container": "#1e2020",
+                        "on-secondary-fixed-variant": "#474746",
+                        "on-secondary-fixed": "#1c1b1b",
+                        "tertiary-container": "#fed83a",
+                        "on-secondary-container": "#b7b5b4",
+                        "primary-fixed": "#74f5ff",
+                        "on-primary-fixed-variant": "#004f54",
+                        "on-error-container": "#ffdad6",
+                        "tertiary-fixed": "#ffe173",
+                        "error": "#ffb4ab",
+                        "surface-container-lowest": "#0d0e0f",
+                        "surface-bright": "#383939",
+                        "on-primary": "#00363a",
+                        "on-primary-fixed": "#002022",
+                        "inverse-surface": "#e3e2e2",
+                        "surface-variant": "#343535",
+                        "on-tertiary-fixed-variant": "#554500",
+                        "surface-container-highest": "#343535",
+                        "inverse-primary": "#00696f",
+                        "background": "#0d0d0d",
+                        "secondary-container": "#474746",
+                        "surface": "#121414",
+                        "on-primary-container": "#006a71",
+                        "primary-fixed-dim": "#00dbe7",
+                        "tertiary": "#fff6e4",
+                        "on-secondary": "#313030",
+                        "surface-container-high": "#292a2a",
+                        "on-tertiary-container": "#725e00",
+                        "error-container": "#93000a",
+                        "primary": "#e1fdff",
+                        "on-surface-variant": "#b9cacb",
+                        "surface-container-low": "#1a1c1c",
+                        "secondary": "#c8c6c5",
+                        "surface-dim": "#121414",
+                        "inverse-on-surface": "#2f3131",
+                        "on-tertiary": "#3b2f00",
+                        "on-tertiary-fixed": "#221b00",
+                        "on-surface": "#e3e2e2",
+                        "tertiary-fixed-dim": "#e8c423",
+                        "outline-variant": "#3a494b",
+                        "surface-tint": "#00dbe7",
+                        "on-background": "#e3e2e2",
+                        "secondary-fixed-dim": "#c8c6c5",
+                        "primary-container": "#00f2ff",
+                        "secondary-fixed": "#e5e2e1"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "0.125rem",
+                        "lg": "0.25rem",
+                        "xl": "0.5rem",
+                        "full": "0.75rem"
+                    },
+                    "spacing": {
+                        "sm": "16px",
+                        "xs": "8px",
+                        "lg": "40px",
+                        "margin": "32px",
+                        "md": "24px",
+                        "base": "4px",
+                        "xl": "64px",
+                        "gutter": "24px"
+                    },
+                    "fontFamily": {
+                        "body-md": ["JetBrains Mono"],
+                        "code-sm": ["JetBrains Mono"],
+                        "display": ["Geist"],
+                        "headline-lg": ["Geist"],
+                        "headline-md": ["Geist"],
+                        "body-lg": ["JetBrains Mono"],
+                        "label-caps": ["JetBrains Mono"]
+                    },
+                    "fontSize": {
+                        "body-md": ["14px", {"lineHeight": "1.5", "fontWeight": "400"}],
+                        "code-sm": ["13px", {"lineHeight": "1.4", "fontWeight": "400"}],
+                        "display": ["48px", {"lineHeight": "1.1", "letterSpacing": "-0.02em", "fontWeight": "700"}],
+                        "headline-lg": ["32px", {"lineHeight": "1.2", "letterSpacing": "-0.01em", "fontWeight": "600"}],
+                        "headline-md": ["24px", {"lineHeight": "1.3", "fontWeight": "600"}],
+                        "body-lg": ["16px", {"lineHeight": "1.6", "fontWeight": "400"}],
+                        "label-caps": ["12px", {"lineHeight": "1", "letterSpacing": "0.05em", "fontWeight": "700"}]
+                    }
+                },
+            },
+        }
+    </script>
+<style>
+        body {
+            background-color: #0d0d0d;
+            color: #e3e2e2;
+            -webkit-font-smoothing: antialiased;
+        }
+        .custom-scrollbar::-webkit-scrollbar {
+            width: 4px;
+        }
+        .custom-scrollbar::-webkit-scrollbar-track {
+            background: #0d0d0d;
+        }
+        .custom-scrollbar::-webkit-scrollbar-thumb {
+            background: #3a494b;
+        }
+        .syntax-keyword { color: #00f2ff; }
+        .syntax-string { color: #b9cacb; }
+        .syntax-comment { color: #474746; }
+        .syntax-function { color: #74f5ff; }
+
+        /* Markdown Styling */
+        .markdown-container h1 { @apply font-display text-display text-on-surface mb-xl border-b border-outline-variant pb-xs; }
+        .markdown-container h2 { @apply font-headline-lg text-headline-lg text-on-surface mt-xl mb-md flex items-center gap-xs; }
+        .markdown-container h3 { @apply font-headline-md text-headline-md text-on-surface mt-lg mb-sm; }
+        .markdown-container p { @apply font-body-lg text-on-surface-variant mb-md leading-relaxed; }
+        .markdown-container a { @apply text-primary-container hover:underline decoration-primary-container/30 underline-offset-4 transition-all; }
+        .markdown-container code:not(pre code) { @apply bg-surface-container-highest/50 px-base py-[2px] rounded font-code-sm text-primary-container; }
+        .markdown-container ul { @apply list-disc list-inside mb-md space-y-xs pl-xs text-on-surface-variant font-body-md; }
+        .markdown-container blockquote { @apply border-l-2 border-primary-container pl-md py-xs mb-md bg-surface-container-lowest/30 italic text-on-surface-variant/80; }
+        
+        .code-block-wrapper { @apply relative group my-md rounded-lg overflow-hidden border border-outline-variant bg-[#050505]; }
+        .code-block-header { @apply flex justify-between items-center px-sm py-xs bg-surface-container-lowest border-b border-outline-variant text-label-caps text-[10px] uppercase tracking-widest text-on-surface-variant/60; }
+    </style>
+</head>
+<body class="font-body-md text-body-md selection:bg-primary-container selection:text-on-primary min-h-screen flex flex-col">
+
+<!-- Main Content Area -->
+<main class="flex-grow max-w-4xl mx-auto px-sm py-xl pb-32 w-full">
+<!-- Breadcrumb -->
+<div class="mb-lg opacity-40 flex items-center gap-base">
+<span class="font-label-caps text-[10px] tracking-widest">REPOS</span>
+<span class="material-symbols-outlined text-[12px]" data-icon="chevron_right">chevron_right</span>
+<span class="font-label-caps text-[10px] tracking-widest text-primary-container">{{ repo }}</span>
+</div>
+<!-- Long-form Markdown Content -->
+<article class="markdown-container">
+<p>{{ doc | safe  }}</p>
+
+</article>
+</main>
+<!-- AI Prompt Interface (Fixed Bottom) -->
+ <form method="post" action="{% url 'chat' %}">
+   {% csrf_token %}
+<div class="fixed bottom-0 left-0 w-full z-40 bg-background/95 backdrop-blur-md border-t border-outline-variant p-sm flex flex-col gap-xs">
+<div class="max-w-4xl mx-auto w-full">
+<label class="text-on-surface-variant font-label-caps text-[10px] uppercase tracking-[0.2em] mb-xs block">Ask AI about this documentation</label>
+<div class="flex items-center gap-xs">
+<div class="flex-grow relative">
+<input name="user_msg" class="w-full bg-surface-container-lowest border border-outline-variant rounded-lg px-sm py-sm text-on-surface focus:ring-1 focus:ring-primary-container focus:border-primary-container outline-none transition-all placeholder:text-on-surface-variant/40" placeholder="e.g. How do I implement navigation guards?" type="text"/>
+<input type="hidden" name="obj_id" value="{{ obj_id }}">
+</div>
+<button class="bg-primary-container text-on-primary font-label-caps h-[42px] px-md rounded-lg active:scale-95 transition-transform flex items-center justify-center gap-xs">
+<span class="material-symbols-outlined text-[20px]" data-icon="chat">chat</span>
+<span class="hidden md:inline">ASK AI</span>
+</button>
+</div>
+</div>
+</div>
+</form>
+<!-- Micro-interaction Script -->
+<script>
+    document.querySelectorAll('button').forEach(btn => {
+        btn.addEventListener('click', () => {
+            if(btn.querySelector('[data-icon="content_copy"]')) {
+                const iconSpan = btn.querySelector('[data-icon="content_copy"]');
+                const textSpan = btn.querySelector('span:not(.material-symbols-outlined)');
+                
+                const originalIcon = iconSpan.innerText;
+                const originalText = textSpan ? textSpan.innerText : '';
+                
+                iconSpan.innerText = 'check';
+                if(textSpan) textSpan.innerText = 'Copied';
+                btn.classList.add('text-primary-container');
+                
+                setTimeout(() => {
+                    iconSpan.innerText = originalIcon;
+                    if(textSpan) textSpan.innerText = originalText;
+                    btn.classList.remove('text-primary-container');
+                }, 2000);
+            }
+        });
+    });
+</script>
+
+<script>
+    document.addEventListener("DOMContentLoaded", () => {
+    
+        document.querySelectorAll(".codehilite").forEach(block => {
+    
+            const pre = block.querySelector("pre");
+            const code = block.querySelector("code");
+    
+            if (!pre || !code) return;
+    
+            // -------- COPY BUTTON --------
+            const btn = document.createElement("button");
+            btn.className = "copy-btn";
+            btn.innerText = "Copy";
+    
+            btn.addEventListener("click", async () => {
+                await navigator.clipboard.writeText(code.innerText);
+                btn.innerText = "Copied";
+                setTimeout(() => btn.innerText = "Copy", 1200);
+            });
+    
+            block.appendChild(btn);
+    
+            // -------- LINE NUMBERS (REAL FIX) --------
+            const lines = code.innerText.split("\n");
+    
+            code.innerHTML = lines
+                .map(line => `<span class="line">${line || " "}</span>`)
+                .join("");
+        });
+    
+    });
+    </script>
+   {% endblock %}
+</body></html>

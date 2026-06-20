@@ -1,0 +1,263 @@
+{% extends 'base.html' %}
+
+<!DOCTYPE html>
+
+{% block content %}
+<html class="dark" lang="en"><head>
+    {% load static %}
+    {% load unix_time %}
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" name="viewport"/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+
+<link rel="stylesheet" href="{% static 'css/highlight.css' %}">
+<link rel="stylesheet" href="{% static 'css/style.css' %}">
+
+<link href="https://fonts.googleapis.com/css2?family=Geist:wght@100..900&amp;family=JetBrains+Mono:wght@100..800&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+    tailwind.config = {
+      darkMode: "class",
+      theme: {
+        extend: {
+          "colors": {
+                  "primary-fixed-dim": "#00dbe7",
+                  "on-primary": "#00363a",
+                  "surface-variant": "#343535",
+                  "on-background": "#e3e2e2",
+                  "secondary-fixed": "#e5e2e1",
+                  "surface-container-highest": "#343535",
+                  "tertiary": "#fff6e4",
+                  "on-primary-fixed-variant": "#004f54",
+                  "surface-container-low": "#1a1c1c",
+                  "inverse-primary": "#00696f",
+                  "on-error-container": "#ffdad6",
+                  "inverse-on-surface": "#2f3131",
+                  "on-error": "#690005",
+                  "surface-container-high": "#292a2a",
+                  "surface-bright": "#383939",
+                  "error-container": "#93000a",
+                  "primary-container": "#00f2ff",
+                  "surface": "#121414",
+                  "outline": "#849495",
+                  "on-secondary-fixed-variant": "#474746",
+                  "tertiary-container": "#fed83a",
+                  "on-tertiary-fixed": "#221b00",
+                  "secondary-fixed-dim": "#c8c6c5",
+                  "error": "#ffb4ab",
+                  "on-secondary": "#313030",
+                  "on-primary-fixed": "#002022",
+                  "primary": "#e1fdff",
+                  "tertiary-fixed": "#ffe173",
+                  "secondary-container": "#474746",
+                  "outline-variant": "#3a494b",
+                  "secondary": "#c8c6c5",
+                  "on-tertiary-fixed-variant": "#554500",
+                  "on-primary-container": "#006a71",
+                  "on-tertiary-container": "#725e00",
+                  "primary-fixed": "#74f5ff",
+                  "on-tertiary": "#3b2f00",
+                  "on-secondary-container": "#b7b5b4",
+                  "on-secondary-fixed": "#1c1b1b",
+                  "surface-tint": "#00dbe7",
+                  "on-surface": "#e3e2e2",
+                  "background": "#121414",
+                  "tertiary-fixed-dim": "#e8c423",
+                  "surface-dim": "#121414",
+                  "on-surface-variant": "#b9cacb",
+                  "surface-container-lowest": "#0d0e0f",
+                  "inverse-surface": "#e3e2e2",
+                  "surface-container": "#1e2020"
+          },
+          "borderRadius": {
+                  "DEFAULT": "0.125rem",
+                  "lg": "0.25rem",
+                  "xl": "0.5rem",
+                  "full": "2rem"
+          },
+          "spacing": {
+                  "xl": "64px",
+                  "sm": "16px",
+                  "md": "24px",
+                  "gutter": "24px",
+                  "xs": "8px",
+                  "margin": "32px",
+                  "lg": "40px",
+                  "base": "4px"
+          },
+          "fontFamily": {
+                  "display": ["Geist"],
+                  "code-sm": ["JetBrains Mono"],
+                  "body-md": ["JetBrains Mono"],
+                  "headline-md": ["Geist"],
+                  "body-lg": ["JetBrains Mono"],
+                  "headline-lg": ["Geist"],
+                  "label-caps": ["JetBrains Mono"]
+          },
+          "fontSize": {
+                  "display": ["48px", {"lineHeight": "1.1", "letterSpacing": "-0.02em", "fontWeight": "700"}],
+                  "code-sm": ["13px", {"lineHeight": "1.4", "fontWeight": "400"}],
+                  "body-md": ["14px", {"lineHeight": "1.5", "fontWeight": "400"}],
+                  "headline-md": ["24px", {"lineHeight": "1.3", "fontWeight": "600"}],
+                  "body-lg": ["16px", {"lineHeight": "1.6", "fontWeight": "400"}],
+                  "headline-lg": ["32px", {"lineHeight": "1.2", "letterSpacing": "-0.01em", "fontWeight": "600"}],
+                  "label-caps": ["12px", {"lineHeight": "1", "letterSpacing": "0.05em", "fontWeight": "700"}]
+          }
+        },
+      },
+    }
+  </script>
+<style>
+
+    .codehilite pre {
+        padding: 1rem;
+        overflow-x: auto;
+        border-radius: 0.25rem;
+    }
+    
+    .codehilite code {
+        all: unset;
+    }
+
+    body {
+      background-color: #121414;
+      color: #e3e2e2;
+      -webkit-tap-highlight-color: transparent;
+    }
+    .material-symbols-outlined {
+      font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+    }
+    .chat-scroll-area {
+      height: calc(100vh - 160px);
+      scrollbar-width: none;
+      -ms-overflow-style: none;
+    }
+    .chat-scroll-area::-webkit-scrollbar {
+      display: none;
+    }
+
+
+
+
+
+  </style>
+</head>
+<body class="font-body-md text-body-md overflow-hidden bg-background">
+<!-- Top Navigation Shell -->
+<header class="fixed top-0 left-0 w-full z-50 bg-background border-b border-outline-variant">
+<div class="flex justify-between items-center w-full px-sm py-md max-w-7xl mx-auto">
+<div class="flex flex-col">
+<span class="text-label-caps font-label-caps text-on-surface-variant mb-base">REPOSITORY</span>
+<h1 class="text-headline-md font-headline-md font-bold text-primary-container">{{ repo }}</h1>
+</div>
+<a class="text-label-caps font-label-caps text-primary-container flex items-center gap-xs hover:opacity-80 transition-opacity" href="{% url 'repo_view' repo=shortcut %}">
+<span class="material-symbols-outlined text-[18px]">arrow_back</span>
+        BACK TO DOCS
+      </a>
+</div>
+</header>
+<!-- Main Chat Canvas -->
+{% for msg in history %}
+
+<main class="pt-[90px] pb-[100px] w-full px-sm h-screen">
+<div class="chat-scroll-area overflow-y-auto flex flex-col py-lg" id="chat-container">
+<!-- Loop starts here for Django/Backend -->
+<!-- User Message Component -->
+<div class="flex flex-col items-end w-full mb-xl animate-in fade-in slide-in-from-right-4 duration-500">
+<div class="max-w-[85%] bg-surface-container-lowest border-2 border-primary-container px-md py-sm rounded-full">
+<p class="font-body-md text-body-md text-on-surface">
+
+    {{ msg.user_msg }} 
+
+</p>
+</div>
+<span class="text-[10px] font-label-caps text-on-surface-variant mt-xs mr-md">YOU • {{ msg.timestamp|unix_to_time }} | {{ msg.timestamp|unix_to_date }}</span>
+</div>
+<!-- AI Message Component -->
+<div class="flex flex-col items-start w-full mb-xl animate-in fade-in slide-in-from-left-4 duration-500">
+<div class="max-w-[90%] bg-surface-container-low px-md py-md rounded-full">
+<div class="px-xs">
+<p class="font-body-md text-body-md text-on-surface leading-relaxed">
+              
+    {{ msg.ai_resp | safe }} 
+
+</p>
+</div>
+</div>
+<span class="text-[10px] font-label-caps text-on-surface-variant mt-xs ml-md">DOCMAKER AI • {{ msg.timestamp|unix_to_time }} | {{ msg.timestamp|unix_to_date }}</span>
+</div>
+{% endfor %}
+<!-- Loop ends here -->
+</div>
+</main>
+<!-- Bottom Input Bar -->
+<form action="{% url 'chat' %}" method="post">
+
+    {% csrf_token %}
+<footer class="fixed bottom-0 left-0 w-full bg-background border-t border-outline-variant p-sm pb-lg md:pb-sm">
+<div class="flex gap-sm items-center">
+<div class="relative flex-grow">
+<input name="user_msg" class="w-full bg-surface-container-low border border-outline-variant rounded-lg px-md py-sm text-on-surface font-body-md focus:outline-none focus:border-primary-container focus:ring-1 focus:ring-primary-container transition-all placeholder:text-on-surface-variant h-[46px]" placeholder="Ask anything..." type="text" required/>
+<input type="hidden" name="obj_id" value="{{ obj_id }}">
+</div>
+<button class="bg-primary-container text-background font-label-caps text-label-caps h-[46px] px-md rounded-lg flex items-center justify-center active:scale-95 transition-transform font-bold">
+<span class="material-symbols-outlined mr-xs">send</span>
+        SEND
+      </button>
+</div>
+</form>
+</footer>
+<!-- Background Texture -->
+<div class="fixed inset-0 pointer-events-none opacity-5 z-[-1]" style="background-image: radial-gradient(#849495 0.5px, transparent 0.5px); background-size: 24px 24px;"></div>
+<script>
+    const chatContainer = document.getElementById('chat-container');
+    const inputField = document.querySelector('input');
+
+    const scrollToBottom = () => {
+      chatContainer.scrollTo({
+        top: chatContainer.scrollHeight,
+        behavior: 'smooth'
+      });
+    };
+
+    inputField.addEventListener('focus', () => {
+      setTimeout(scrollToBottom, 300);
+    });
+
+    window.onload = scrollToBottom;
+  </script>
+  <script>
+    document.addEventListener("DOMContentLoaded", () => {
+    
+        document.querySelectorAll(".codehilite").forEach(block => {
+    
+            const pre = block.querySelector("pre");
+            const code = block.querySelector("code");
+    
+            if (!pre || !code) return;
+    
+            // -------- COPY BUTTON --------
+            const btn = document.createElement("button");
+            btn.className = "copy-btn";
+            btn.innerText = "Copy";
+    
+            btn.addEventListener("click", async () => {
+                await navigator.clipboard.writeText(code.innerText);
+                btn.innerText = "Copied";
+                setTimeout(() => btn.innerText = "Copy", 1200);
+            });
+    
+            block.appendChild(btn);
+    
+            // -------- LINE NUMBERS (REAL FIX) --------
+            const lines = code.innerText.split("\n");
+    
+            code.innerHTML = lines
+                .map(line => `<span class="line">${line || " "}</span>`)
+                .join("");
+        });
+    
+    });
+    </script>
+    {% endblock %}
+</body></html>
