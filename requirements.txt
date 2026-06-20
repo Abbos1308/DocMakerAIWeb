@@ -1,19 +1,15 @@
-asgiref            3.11.1
-certifi            2026.4.22
-charset-normalizer 3.4.7
-dj-database-url    3.1.2
-Django             6.0.5
-docmakerai         0.1.7
-idna               3.13
-Markdown           3.10.2
-pip                26.1.2
-Pygments           2.20.0
-python-decouple    3.8
-requests           2.33.1
-sqlparse           0.5.5
-tzdata             2026.2
-urllib3            2.7.0
-whitenoise         6.12.0
-gunicorn
-psycogpg2-binary
-
+asgiref==3.11.1
+certifi==2026.4.22
+charset-normalizer==3.4.7
+dj-database-url==3.1.2
+Django==6.0.5
+docmakerai==0.1.7
+idna==3.13
+Markdown==3.10.2
+Pygments==2.20.0
+python-decouple==3.8
+requests==2.33.1
+sqlparse==0.5.5
+tzdata==2026.2
+urllib3==2.7.0
+whitenoise==6.12.0
