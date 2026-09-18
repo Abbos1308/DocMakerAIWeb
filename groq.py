@@ -4,7 +4,7 @@ import time
 from config.settings import groq_api_key
 
 BASE_URL = "https://api.groq.com/openai/v1/chat/completions"
-MODEL = "llama-3.3-70b-versatile"
+MODEL = "openai/gpt-oss-120b"
 
 def call_groq(messages,API_KEY, system_prompt=None, max_retries=5):
     headers = {
