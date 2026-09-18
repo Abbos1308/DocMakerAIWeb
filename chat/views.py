@@ -10,6 +10,8 @@ from .models import Repo
 from groq import chat
 import time
 
+logger = logging.getLogger(__name__)
+
 # Create your views here.
 
 # views.py
@@ -19,13 +21,18 @@ def home(request):
         try:
             obj = Repo.objects.get(url=url)
         except Repo.DoesNotExist:
-            doc = generate(url, git_token, groq_api_key)
-            doc = markdown.markdown(doc, extensions=["fenced_code", "codehilite"],
-                extension_configs={"codehilite": {"css_class": "codehilite"}})
-            if doc[3:].startswith("ERROR"):
+            try:
+                doc = generate(url, git_token, groq_api_key)
+                if isinstance(doc, str) and doc.startswith("ERROR"):
+                    logger.error("Documentation generation failed for %s: %s", url, doc)
+                    return render(request, "error.html")
+                doc = markdown.markdown(doc, extensions=["fenced_code", "codehilite"],
+                    extension_configs={"codehilite": {"css_class": "codehilite"}})
+                obj = Repo(url=url, doc=doc)
+                obj.save()
+            except Exception:
+                logger.exception("Unexpected error generating documentation for %s", url)
                 return render(request, "error.html")
-            obj = Repo(url=url, doc=doc)
-            obj.save()
         return redirect('repo_view', repo=obj.shortcut)
     return render(request, "home.html")
 
@@ -40,35 +47,39 @@ def chat_view(request):
     if key not in request.session:
         request.session[key] = []
     if request.method == 'POST':
-        for msg in request.session[key]:
-            user_msg = msg["user_msg"]
-            ai_resp = msg["ai_resp"]
-            messages.append({"role": "user", "content": user_msg})
-            messages.append({"role": "assistant", "content": ai_resp})
-        obj = Repo.objects.get(id=obj_id)
-        doc = obj.doc
-        shortcut = obj.shortcut
-        user_msg = request.POST.get("user_msg")
-        ai_resp = chat(messages,user_msg,doc)
-        ai_resp =  markdown.markdown(
-            ai_resp,
-            extensions=["fenced_code", "codehilite"],
-            extension_configs={
-                "codehilite": {
-                    "css_class": "codehilite"
+        try:
+            for msg in request.session[key]:
+                user_msg = msg["user_msg"]
+                ai_resp = msg["ai_resp"]
+                messages.append({"role": "user", "content": user_msg})
+                messages.append({"role": "assistant", "content": ai_resp})
+            obj = Repo.objects.get(id=obj_id)
+            doc = obj.doc
+            shortcut = obj.shortcut
+            user_msg = request.POST.get("user_msg")
+            ai_resp = chat(messages,user_msg,doc)
+            ai_resp = markdown.markdown(
+                ai_resp,
+                extensions=["fenced_code", "codehilite"],
+                extension_configs={
+                    "codehilite": {
+                        "css_class": "codehilite"
+                    }
                 }
-            }
-        )
-        print(ai_resp)
-        request.session[key].append({
-            "user_msg":user_msg,
-            "ai_resp":ai_resp,
-            "timestamp":int(time.time())
-        })
-        request.session.modified = True
-        return render(request,"chat.html",{
-            "history" : request.session[key],
-            "obj_id":  obj_id,
-            "shortcut" : shortcut,
-        })
+            )
+            logger.info("Chat response generated for repository %s", shortcut)
+            request.session[key].append({
+                "user_msg":user_msg,
+                "ai_resp":ai_resp,
+                "timestamp":int(time.time())
+            })
+            request.session.modified = True
+            return render(request,"chat.html",{
+                "history" : request.session[key],
+                "obj_id":  obj_id,
+                "shortcut" : shortcut,
+            })
+        except Exception:
+            logger.exception("Unexpected error processing chat request for repo %s", obj_id)
+            return render(request, "error.html")
     return render(request,"chat.html")
