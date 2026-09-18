@@ -9,6 +9,7 @@ from django.views.decorators.csrf import csrf_exempt
 from .models import Repo
 from groq import chat
 import time
+import logging
 
 logger = logging.getLogger(__name__)
 
